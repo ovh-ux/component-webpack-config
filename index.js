@@ -1,10 +1,20 @@
 const merge = require('webpack-merge');
-const commonConfig = require('./webpack.common');
+const commonjsConfig = require('./webpack.commonjs');
+const umdConfig = require('./webpack.umd');
 
-module.exports = (opts = {}) => ({
-  config: commonConfig(opts),
-  merge: config => merge(
-    commonConfig(opts),
-    config,
-  ),
-});
+module.exports = {
+  commonjs: (opts = {}) => ({
+    config: commonjsConfig(opts),
+    merge: config => merge(
+      commonjsConfig(opts),
+      config,
+    ),
+  }),
+  umd: (opts = {}) => ({
+    config: umdConfig(opts),
+    merge: config => merge(
+      umdConfig(opts),
+      config,
+    ),
+  }),
+};
