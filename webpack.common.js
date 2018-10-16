@@ -13,7 +13,7 @@ module.exports = (opts) => {
   return {
     mode: 'production',
     output: {
-      path: path.resolve(workingDirectory, './dist'),
+      path: path.resolve(__dirname, './dist'),
       filename: `${lib}.min.js`,
       library: `${lib}`,
       libraryTarget: 'umd',
