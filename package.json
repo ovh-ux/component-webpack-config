@@ -5,7 +5,11 @@
   "author": "OVH SAS",
   "version": "0.0.1",
   "keywords": [
-    "webpack"
+    "components",
+    "configuration",
+    "shared",
+    "webpack",
+    "ovh"
   ],
   "main": "index.js",
   "scripts": {
