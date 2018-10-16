@@ -12,8 +12,8 @@ yarn add -D @ovh-ux/component-webpack-config
 
 ### Parameters
 
-The following configuration parameters are _optionals_ :
- - _library_: your component name (used to name the dist files), if not provided the component directory name will be used instead
+The following configuration parameters are _mandatory_ :
+ - _library_: your component name (used to name the dist files)
 
 ## Example
 
@@ -25,7 +25,7 @@ module.exports = config({
 }).merge({
     entry: "./src/index.js",
     externals: [
-      'angular',
+      'angular', // please note that by default peerDependencies are automatically added to the externals
     ]
 });
 ```
