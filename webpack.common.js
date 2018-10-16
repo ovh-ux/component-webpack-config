@@ -1,12 +1,19 @@
+const fs = require('fs');
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = (opts) => {
-  const lib = opts.library || path.basename(process.cwd());
+  const workingDirectory = process.cwd();
+  const lib = opts.library || path.basename(workingDirectory);
+  const packageConfig = JSON.parse(fs.readFileSync(path.resolve(workingDirectory, 'package.json')));
+  const peerDeps = Object.keys(packageConfig.peerDependencies || {});
+
   return {
     mode: 'production',
     output: {
-      path: path.resolve(process.cwd(), './dist'),
+      path: path.resolve(workingDirectory, './dist'),
       filename: `${lib}.min.js`,
       library: `${lib}`,
       libraryTarget: 'umd',
@@ -31,6 +38,10 @@ module.exports = (opts) => {
           MiniCssExtractPlugin.loader,
           {
             loader: 'css-loader',
+            options: {
+              minimize: true,
+              sourceMap: true,
+            },
           },
           {
             loader: 'less-loader',
@@ -47,8 +58,27 @@ module.exports = (opts) => {
     },
     plugins: [
       new MiniCssExtractPlugin({
-        filename: `${lib}.css`,
+        filename: `${lib}.min.css`,
       }),
     ],
+    externals: peerDeps,
+    optimization: {
+      minimizer: [
+        new UglifyJsPlugin({
+          cache: true,
+          parallel: true,
+          sourceMap: true,
+        }),
+        new OptimizeCSSAssetsPlugin({
+          cssProcessorOptions: {
+            map: {
+              inline: false,
+              annotation: true,
+            },
+          },
+        }),
+      ],
+    },
+    devtool: 'source-map',
   };
 };
