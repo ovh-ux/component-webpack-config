@@ -12,8 +12,8 @@ yarn add -D @ovh-ux/component-webpack-config
 
 ### Parameters
 
-The following configuration parameters are _mandatory_ :
- - _library_: your component name (used to name the dist files)
+The following configuration parameters are _optionals_ :
+ - _library_: your component name (used to name the dist files), if not provided the component directory name will be used instead
 
 ## Example
 

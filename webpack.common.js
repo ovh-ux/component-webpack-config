@@ -6,7 +6,7 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = (opts) => {
   const workingDirectory = process.cwd();
-  const lib = opts.library;
+  const lib = opts.library || path.basename(workingDirectory);
   const packageConfig = JSON.parse(fs.readFileSync(path.resolve(workingDirectory, 'package.json')));
   const peerDeps = Object.keys(packageConfig.peerDependencies || {});
 
