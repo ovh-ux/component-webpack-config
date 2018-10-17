@@ -25,7 +25,7 @@ module.exports = config({
 }).merge({
     entry: "./src/index.js",
     externals: [
-      'angular',
+      'angular', // please note that by default peerDependencies are automatically added to the externals
     ]
 });
 ```
